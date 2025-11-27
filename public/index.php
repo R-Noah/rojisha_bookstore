@@ -23,6 +23,8 @@ try {
 </head>
 <body>
     <h1>Bookstore</h1>
+    <p><a href="book_add.php">Add new book</a></p>
+
 
     <?php if (empty($books)): ?>
         <p>No books found in the database.</p>
