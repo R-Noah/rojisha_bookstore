@@ -10,7 +10,6 @@ $bookModel = new Book($pdo);
 try {
     $books = $bookModel->getAll();
 } catch (Throwable $e) {
-    // In production, log the error instead of showing it
     die('Error fetching books.');
 }
 ?>
@@ -49,8 +48,15 @@ try {
                     <td><?= e($book['genre']) ?></td>
                     <td><?= e($book['year_published']) ?></td>
                     <td>
-                         <a href="book_edit.php?id=<?= e((string)$book['id']) ?>">Edit</a>
-                    </td>
+    <a href="book_edit.php?id=<?= e((string)$book['id']) ?>">Edit</a>
+
+    <form action="book_delete.php" method="post" style="display:inline;"
+          onsubmit="return confirm('Are you sure you want to delete this book?');">
+        <input type="hidden" name="id" value="<?= e((string)$book['id']) ?>">
+        <button type="submit">Delete</button>
+    </form>
+</td>
+
                 </tr>
             <?php endforeach; ?>
             </tbody>
