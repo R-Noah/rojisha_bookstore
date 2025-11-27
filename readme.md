@@ -49,7 +49,7 @@ The application includes:
 
 ## Deployment
 The system runs locally or on the university mi-linux server.  
-The `config/db.php` file must be updated with the correct database credentials for each environment.
+
 
 ## Version Control
 The project is tracked using Git with multiple feature branches and descriptive commit 
