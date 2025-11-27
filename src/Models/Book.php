@@ -130,6 +130,21 @@ public function search(array $filters): array
     return $stmt->fetchAll();
 }
 
+public function searchTitles(string $term): array
+{
+    $sql = "SELECT DISTINCT title 
+            FROM books
+            WHERE title LIKE :term
+            ORDER BY title ASC
+            LIMIT 10";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([
+        ':term' => '%' . $term . '%',
+    ]);
+
+    return $stmt->fetchAll();
+}
 
 
 }

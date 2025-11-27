@@ -57,9 +57,10 @@ try {
 <form method="get" action="index.php">
     <label>
         Title:
-        <input type="text" name="title" value="<?= e($title) ?>">
+        <input type="text" name="title" list="title-suggestions" value="<?= e($title) ?>">
     </label>
     <br><br>
+    <datalist id="title-suggestions"></datalist>
 
     <label>
         Author:
@@ -124,5 +125,6 @@ try {
             </tbody>
         </table>
     <?php endif; ?>
+    <script src="assets/js/search.js"></script>
 </body>
 </html>
