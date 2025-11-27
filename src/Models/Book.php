@@ -90,5 +90,46 @@ public function delete(int $id): bool
     return $stmt->execute([':id' => $id]);
 }
 
+public function search(array $filters): array
+{
+    $sql = "SELECT id, title, author, genre, year_published
+            FROM books
+            WHERE 1=1";
+
+    $params = [];
+
+    // Title: LIKE
+    if (!empty($filters['title'])) {
+        $sql .= " AND title LIKE :title";
+        $params[':title'] = '%' . $filters['title'] . '%';
+    }
+
+    // Author: LIKE
+    if (!empty($filters['author'])) {
+        $sql .= " AND author LIKE :author";
+        $params[':author'] = '%' . $filters['author'] . '%';
+    }
+
+    // Genre: exact match
+    if (!empty($filters['genre'])) {
+        $sql .= " AND genre = :genre";
+        $params[':genre'] = $filters['genre'];
+    }
+
+    // Year: exact match
+    if (!empty($filters['year'])) {
+        $sql .= " AND year_published = :year";
+        $params[':year'] = (int)$filters['year'];
+    }
+
+    $sql .= " ORDER BY created_at DESC";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute($params);
+
+    return $stmt->fetchAll();
+}
+
+
 
 }
