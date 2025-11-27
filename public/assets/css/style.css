@@ -1,4 +1,358 @@
+/* ============ Reset / Base ============ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: #f5f7fb;
+    color: #111827;
+    line-height: 1.5;
+}
+
+/* ============ Layout ============ */
+
+header {
+    background: #0f172a; /* dark navy */
+    color: #f9fafb;
+    padding: 1rem 0;
+    margin-bottom: 1.5rem;
+}
+
+header .brand {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.auth-status {
+    font-size: 0.9rem;
+}
+
+header a {
+    color: #e5e7eb;
+    text-decoration: none;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.25rem 0.5rem 1.25rem;
+    font-size: 0.9rem;
+}
+
+nav a {
+    color: #cbd5f5;
+    margin-right: 0.75rem;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Main container */
+main {
+    max-width: 1100px;
+    margin: 0 auto 2.5rem auto;
+    padding: 0 1.25rem;
+    transition: opacity 0.3s ease-in-out; /* Added for smoother page loads */
+}
+
+/* Card wrapper - ENHANCED SHADOW & RADIUS */
+.card {
+    background: #ffffff;
+    border-radius: 10px; /* Slightly rounder */
+    padding: 1.25rem 1.5rem;
+    /* Improved shadow for depth */
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06),
+                0 1px 3px rgba(15, 23, 42, 0.12);
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.2s ease;
+}
+
+/* Headings - ENHANCED VISUAL HIERARCHY */
+h2 {
+    margin-top: 0;
+    font-size: 1.25rem;
+    color: #0f172a;
+    font-weight: 700; /* Bolder */
+    letter-spacing: -0.01em;
+    border-bottom: 1px solid #e5e7eb; /* Subtle separator line */
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem; /* Adjust margin after the line */
+}
+
+/* ============ Links & Buttons ============ */
+
+a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button,
+.button-link {
+    display: inline-block;
+    border: none;
+    padding: 0.5rem 0.95rem;
+    border-radius: 8px; /* Slightly rounder */
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    background: #2563eb;
+    color: #ffffff;
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.05s ease;
+}
+
+button:hover,
+.button-link:hover {
+    background: #1d4ed8;
+    text-decoration: none;
+}
+
+button:active,
+.button-link:active {
+    transform: scale(0.98);
+}
+
+/* ACCESSIBLE FOCUS STATE */
+button:focus-visible,
+.button-link:focus-visible {
+    outline: 2px solid #3b82f6; /* A distinct blue ring */
+    outline-offset: 3px;
+}
+
+.btn-secondary {
+    background: #6b7280;
+}
+
+.btn-secondary:hover {
+    background: #4b5563;
+}
+
+.btn-danger {
+    background: #dc2626;
+}
+
+.btn-danger:hover {
+    background: #b91c1c;
+}
+
+/* ============ Forms ============ */
+
+form {
+    margin-top: 0.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.9rem;
+    font-size: 0.95rem;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    max-width: 430px;
+    padding: 0.5rem 0.65rem;
+    border-radius: 8px; /* Match other components */
+    border: 1px solid #d1d5db;
+    font-size: 0.95rem;
+    background-color: #ffffff;
+    /* Added subtle inset shadow */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+/* ENHANCED FOCUS RING */
+input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+.errors {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    color: #991b1b;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.errors ul {
+    margin: 0;
+    padding-left: 1.1rem;
+}
+
+/* ============ Search Box ============ */
+
+.search-box {
+    margin-bottom: 1.5rem;
+}
+
+.search-actions {
+    margin-top: 0.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.search-actions a {
+    font-size: 0.85rem;
+}
+
+/* ============ Table ============ */
+
+.table-card {
+    padding-top: 0.5rem;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0.9rem;
+}
+
+thead {
+    background-color: #111827;
+    color: #f9fafb;
+}
+
+th,
+td {
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Made table header text bolder */
+thead th {
+    font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+tbody tr:hover {
+    background-color: #eef2ff;
+}
+
+/* Removed border on the last row for a cleaner look */
+table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+th:last-child,
+td:last-child {
+    white-space: nowrap;
+}
+
+/* Actions column */
+
+td .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+td .actions form {
+    display: inline-block;
+    margin: 0;
+}
+
+/* ============ Typography tweaks ============ */
+
+p {
+    margin: 0.25rem 0;
+    font-size: 0.95rem;
+}
+
+/* ============ Responsive Design ============ */
+
+@media (max-width: 768px) {
+    header .brand {
+        padding: 0 0.9rem;
+    }
+
+    header h1 {
+        font-size: 1.4rem;
+    }
+
+    nav {
+        padding: 0 0.9rem 0.5rem 0.9rem;
+    }
+
+    main {
+        padding: 0 0.9rem;
+    }
+
+    .card {
+        padding: 1rem 1rem;
+    }
+
+    table {
+        font-size: 0.85rem;
+    }
+
+    th,
+    td {
+        padding: 0.5rem 0.55rem;
+    }
+}
+
+@media (max-width: 600px) {
+    header .brand {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .auth-status {
+        font-size: 0.85rem;
+    }
+
+    nav {
+        font-size: 0.8rem;
+    }
+
+    .table-wrapper {
+        margin-top: 0.5rem;
+    }
 }
