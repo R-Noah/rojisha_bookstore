@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Bookstore{% endblock %}</title>
+    <link rel="stylesheet" href="/bookstore/public/assets/css/style.css">
+</head>
+<body>
+<header>
+    <h1>Bookstore</h1>
+
+    <div class="auth-status">
+        {% if is_logged_in %}
+            <p>Logged in as {{ username }} |
+                <a href="logout.php">Logout</a></p>
+        {% else %}
+            <p><a href="login.php">Login</a></p>
+        {% endif %}
+    </div>
+
+    <nav>
+        <a href="index.php">Home</a> |
+        <a href="book_add.php">Add new book</a>
+    </nav>
+    <hr>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+</body>
+</html>
