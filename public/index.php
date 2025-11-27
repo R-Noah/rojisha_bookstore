@@ -36,14 +36,14 @@ try {
 
 // Prepare auth info for Twig
 $isLoggedIn = is_logged_in();
-$username = $isLoggedIn ? ($_SESSION['username'] ?? '') : '';
+$username_nav = $isLoggedIn ? ($_SESSION['username'] ?? '') : '';
 
 echo $twig->render('home.html.twig', [
-    'books'      => $books,
-    'title'      => $title,
-    'author'     => $author,
-    'genre'      => $genre,
-    'year'       => $year,
-    'is_logged_in' => $isLoggedIn,
-    'username'     => $username,
+    'books'         => $books,
+    'title'         => $title,
+    'author'        => $author,
+    'genre'         => $genre,
+    'year'          => $year,
+    'is_logged_in'  => $isLoggedIn,
+    'username_nav'  => $username_nav,
 ]);

@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../src/helpers.php';
 require_once __DIR__ . '/../src/Security/Auth.php';
+require_once __DIR__ . '/../twig_init.php';
 
 $errors = [];
 $username = '';
@@ -54,49 +55,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login - Bookstore</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-    <h1>Login</h1>
 
-    <p><a href="index.php">← Back to homepage</a></p>
+// Auth info for base layout
+$isLoggedIn = is_logged_in();
+$currentUsername = $isLoggedIn ? ($_SESSION['username'] ?? '') : '';
 
-    <?php if (!empty($errors)): ?>
-        <div class="errors">
-            <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?= e($error) ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
-
-    <form action="login.php" method="post">
-        <label>
-            Username:
-            <input type="text" name="username" value="<?= e($username) ?>" required>
-        </label>
-        <br><br>
-
-        <label>
-            Password:
-            <input type="password" name="password" required>
-        </label>
-        <br><br>
-
-        <label>
-            CAPTCHA: What is <?= e((string)$captchaA) ?> + <?= e((string)$captchaB) ?> ?
-            <input type="number" name="captcha" required>
-        </label>
-        <br><br>
-
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
+echo $twig->render('login.html.twig', [
+    'errors'      => $errors,
+    'username'    => $username,
+    'captchaA'    => $captchaA,
+    'captchaB'    => $captchaB,
+    'is_logged_in'=> $isLoggedIn,
+    'username'    => $username,
+    'username_nav'=> $currentUsername,
+]);
