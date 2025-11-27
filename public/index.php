@@ -1,9 +1,11 @@
 <?php
+// public/index.php
+
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../src/helpers.php';
 require_once __DIR__ . '/../src/Models/Book.php';
 require_once __DIR__ . '/../src/Security/Auth.php';
-
+require_once __DIR__ . '/../twig_init.php';
 
 $bookModel = new Book($pdo);
 
@@ -28,103 +30,20 @@ try {
         $books = $bookModel->getAll();
     }
 } catch (Throwable $e) {
-    // For now just show a simple message
+    // In production you'd log this
     die('Error fetching books.');
 }
-?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Bookstore</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-    <h1>Bookstore</h1>
-    <div class="auth-status">
-    <?php if (is_logged_in()): ?>
-        <p>Logged in as <?= e($_SESSION['username']) ?> |
-            <a href="logout.php">Logout</a></p>
-    <?php else: ?>
-        <p><a href="login.php">Login</a></p>
-    <?php endif; ?>
-</div>
+// Prepare auth info for Twig
+$isLoggedIn = is_logged_in();
+$username = $isLoggedIn ? ($_SESSION['username'] ?? '') : '';
 
-    <p><a href="book_add.php">Add new book</a></p>
-<h2>Search Books</h2>
-
-<form method="get" action="index.php">
-    <label>
-        Title:
-        <input type="text" name="title" list="title-suggestions" value="<?= e($title) ?>">
-    </label>
-    <br><br>
-    <datalist id="title-suggestions"></datalist>
-
-    <label>
-        Author:
-        <input type="text" name="author" value="<?= e($author) ?>">
-    </label>
-    <br><br>
-
-    <label>
-        Genre:
-        <input type="text" name="genre" value <?= e($genre) ?>>
-    </label>
-    <br><br>
-
-    <label>
-        Year:
-        <input type="number" name="year" value="<?= e($year) ?>">
-    </label>
-    <br><br>
-
-    <button type="submit">Search</button>
-    <a href="index.php">Reset</a>
-</form>
-
-
-<hr>
-
-
-    <?php if (empty($books)): ?>
-        <p>No books found in the database.</p>
-    <?php else: ?>
-        <table border="1" cellpadding="8" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Genre</th>
-                    <th>Year</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($books as $book): ?>
-                <tr>
-                    <td><?= e($book['id']) ?></td>
-                    <td><?= e($book['title']) ?></td>
-                    <td><?= e($book['author']) ?></td>
-                    <td><?= e($book['genre']) ?></td>
-                    <td><?= e($book['year_published']) ?></td>
-                    <td>
-    <a href="book_edit.php?id=<?= e((string)$book['id']) ?>">Edit</a>
-
-    <form action="book_delete.php" method="post" style="display:inline;"
-          onsubmit="return confirm('Are you sure you want to delete this book?');">
-        <input type="hidden" name="id" value="<?= e((string)$book['id']) ?>">
-        <button type="submit">Delete</button>
-    </form>
-</td>
-
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-    <?php endif; ?>
-    <script src="assets/js/search.js"></script>
-</body>
-</html>
+echo $twig->render('home.html.twig', [
+    'books'      => $books,
+    'title'      => $title,
+    'author'     => $author,
+    'genre'      => $genre,
+    'year'       => $year,
+    'is_logged_in' => $isLoggedIn,
+    'username'     => $username,
+]);

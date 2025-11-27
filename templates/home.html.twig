@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bookstore - Home{% endblock %}
+
+{% block content %}
+
+<h2>Search Books</h2>
+
+<form method="get" action="index.php">
+    <label>
+        Title:
+        <input type="text" name="title" list="title-suggestions" value="{{ title }}">
+    </label>
+    <br><br>
+
+    <label>
+        Author:
+        <input type="text" name="author" value="{{ author }}">
+    </label>
+    <br><br>
+
+    <label>
+        Genre:
+        <input type="text" name="genre" value="{{ genre }}">
+    </label>
+    <br><br>
+
+    <label>
+        Year:
+        <input type="number" name="year" value="{{ year }}">
+    </label>
+    <br><br>
+
+    <button type="submit">Search</button>
+    <a href="index.php">Reset</a>
+</form>
+
+<datalist id="title-suggestions"></datalist>
+
+<hr>
+
+{% if books is empty %}
+    <p>No books found.</p>
+{% else %}
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Year</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.id }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.genre }}</td>
+                <td>{{ book.year_published }}</td>
+                <td>
+                    <a href="book_edit.php?id={{ book.id }}">Edit</a>
+
+                    <form action="book_delete.php" method="post" style="display:inline;"
+                          onsubmit="return confirm('Are you sure you want to delete this book?');">
+                        <input type="hidden" name="id" value="{{ book.id }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+<script src="assets/js/search.js"></script>
+
+{% endblock %}
