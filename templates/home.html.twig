@@ -42,6 +42,7 @@
 {% if books is empty %}
     <p>No books found.</p>
 {% else %}
+<div class="table-wrapper">
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>
@@ -74,6 +75,7 @@
         {% endfor %}
         </tbody>
     </table>
+</div>
 {% endif %}
 
 <script src="assets/js/search.js"></script>
