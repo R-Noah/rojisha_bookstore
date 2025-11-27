@@ -1,0 +1,44 @@
+{# templates/login.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Login - Bookstore{% endblock %}
+
+{% block content %}
+
+<h2>Login</h2>
+
+<p><a href="index.php">← Back to homepage</a></p>
+
+{% if errors is not empty %}
+    <div class="errors">
+        <ul>
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<form action="login.php" method="post">
+    <label>
+        Username:
+        <input type="text" name="username" value="{{ username }}" required>
+    </label>
+    <br><br>
+
+    <label>
+        Password:
+        <input type="password" name="password" required>
+    </label>
+    <br><br>
+
+    <label>
+        CAPTCHA: What is {{ captchaA }} + {{ captchaB }} ?
+        <input type="number" name="captcha" required>
+    </label>
+    <br><br>
+
+    <button type="submit">Login</button>
+</form>
+
+{% endblock %}
