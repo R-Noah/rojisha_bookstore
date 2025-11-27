@@ -83,6 +83,12 @@ public function update(int $id, array $data): bool
         ':id'             => $id,
     ]);
 }
+public function delete(int $id): bool
+{
+    $sql = "DELETE FROM books WHERE id = :id";
+    $stmt = $this->pdo->prepare($sql);
+    return $stmt->execute([':id' => $id]);
+}
 
 
 }
