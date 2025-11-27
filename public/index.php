@@ -1,9 +1,9 @@
 <?php
-// public/index.php
-
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../src/helpers.php';
 require_once __DIR__ . '/../src/Models/Book.php';
+require_once __DIR__ . '/../src/Security/Auth.php';
+
 
 $bookModel = new Book($pdo);
 
@@ -42,6 +42,15 @@ try {
 </head>
 <body>
     <h1>Bookstore</h1>
+    <div class="auth-status">
+    <?php if (is_logged_in()): ?>
+        <p>Logged in as <?= e($_SESSION['username']) ?> |
+            <a href="logout.php">Logout</a></p>
+    <?php else: ?>
+        <p><a href="login.php">Login</a></p>
+    <?php endif; ?>
+</div>
+
     <p><a href="book_add.php">Add new book</a></p>
 <h2>Search Books</h2>
 
