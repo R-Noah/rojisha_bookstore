@@ -7,12 +7,32 @@ require_once __DIR__ . '/../src/Models/Book.php';
 
 $bookModel = new Book($pdo);
 
+// Read and clean search inputs
+$title  = clean_string($_GET['title'] ?? '');
+$author = clean_string($_GET['author'] ?? '');
+$genre  = clean_string($_GET['genre'] ?? '');
+$year   = clean_string($_GET['year'] ?? '');
+
+// Decide whether to search or list all
+$hasSearch = ($title !== '' || $author !== '' || $genre !== '' || $year !== '');
+
 try {
-    $books = $bookModel->getAll();
+    if ($hasSearch) {
+        $books = $bookModel->search([
+            'title'  => $title,
+            'author' => $author,
+            'genre'  => $genre,
+            'year'   => $year,
+        ]);
+    } else {
+        $books = $bookModel->getAll();
+    }
 } catch (Throwable $e) {
+    // For now just show a simple message
     die('Error fetching books.');
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +43,39 @@ try {
 <body>
     <h1>Bookstore</h1>
     <p><a href="book_add.php">Add new book</a></p>
+<h2>Search Books</h2>
+
+<form method="get" action="index.php">
+    <label>
+        Title:
+        <input type="text" name="title" value="<?= e($title) ?>">
+    </label>
+    <br><br>
+
+    <label>
+        Author:
+        <input type="text" name="author" value="<?= e($author) ?>">
+    </label>
+    <br><br>
+
+    <label>
+        Genre:
+        <input type="text" name="genre" value <?= e($genre) ?>>
+    </label>
+    <br><br>
+
+    <label>
+        Year:
+        <input type="number" name="year" value="<?= e($year) ?>">
+    </label>
+    <br><br>
+
+    <button type="submit">Search</button>
+    <a href="index.php">Reset</a>
+</form>
+
+
+<hr>
 
 
     <?php if (empty($books)): ?>
