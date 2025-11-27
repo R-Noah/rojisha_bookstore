@@ -1,10 +1,14 @@
 <?php
+// public/book_edit.php
+
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../src/helpers.php';
 require_once __DIR__ . '/../src/Models/Book.php';
 require_once __DIR__ . '/../src/Security/Auth.php';
+require_once __DIR__ . '/../twig_init.php';
 
 require_login();
+
 $bookModel = new Book($pdo);
 $errors = [];
 
@@ -76,66 +80,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Book</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-    <h1>Edit Book</h1>
 
-    <p><a href="index.php">← Back to list</a></p>
+// Auth info for header
+$isLoggedIn   = is_logged_in();
+$username_nav = $isLoggedIn ? ($_SESSION['username'] ?? '') : '';
 
-    <?php if (!empty($errors)): ?>
-        <div class="errors">
-            <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?= e($error) ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
-
-    <form action="book_edit.php?id=<?= e((string)$id) ?>" method="post">
-        <label>
-            Title:
-            <input type="text" name="title" value="<?= e($title) ?>" required>
-        </label><br><br>
-
-        <label>
-            Author:
-            <input type="text" name="author" value="<?= e($author) ?>" required>
-        </label><br><br>
-
-        <label>
-            Genre:
-            <input type="text" name="genre" value="<?= e($genre) ?>" required>
-        </label><br><br>
-
-        <label>
-            Year Published:
-            <input type="number" name="year_published" value="<?= e((string)$year_published) ?>" required>
-        </label><br><br>
-
-        <label>
-            ISBN:
-            <input type="text" name="isbn" value="<?= e($isbn) ?>">
-        </label><br><br>
-
-        <label>
-            Price:
-            <input type="number" step="0.01" name="price" value="<?= e((string)$price) ?>">
-        </label><br><br>
-
-        <label>
-            Stock:
-            <input type="number" name="stock" value="<?= e((string)$stock) ?>" min="0">
-        </label><br><br>
-
-        <button type="submit">Save Changes</button>
-    </form>
-</body>
-</html>
+echo $twig->render('book_edit.html.twig', [
+    'id'             => $id,
+    'errors'         => $errors,
+    'title'          => $title,
+    'author'         => $author,
+    'genre'          => $genre,
+    'year_published' => $year_published,
+    'isbn'           => $isbn,
+    'price'          => $price,
+    'stock'          => $stock,
+    'is_logged_in'   => $isLoggedIn,
+    'username_nav'   => $username_nav,
+]);
