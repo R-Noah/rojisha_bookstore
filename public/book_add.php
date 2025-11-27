@@ -1,9 +1,10 @@
 <?php
-// public/book_add.php
-
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../src/helpers.php';
 require_once __DIR__ . '/../src/Models/Book.php';
+require_once __DIR__ . '/../src/Security/Auth.php';
+
+require_login();
 
 $bookModel = new Book($pdo);
 
