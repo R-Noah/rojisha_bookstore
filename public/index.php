@@ -37,6 +37,7 @@ try {
                     <th>Author</th>
                     <th>Genre</th>
                     <th>Year</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,6 +48,9 @@ try {
                     <td><?= e($book['author']) ?></td>
                     <td><?= e($book['genre']) ?></td>
                     <td><?= e($book['year_published']) ?></td>
+                    <td>
+                         <a href="book_edit.php?id=<?= e((string)$book['id']) ?>">Edit</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

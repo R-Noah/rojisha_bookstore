@@ -43,4 +43,46 @@ class Book
     ]);
 }
 
+public function getById(int $id): ?array
+{
+    $sql = "SELECT id, title, author, genre, year_published, isbn, price, stock
+            FROM books
+            WHERE id = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([':id' => $id]);
+    $book = $stmt->fetch();
+
+    return $book ?: null;
+}
+
+public function update(int $id, array $data): bool
+{
+    $sql = "UPDATE books
+            SET title = :title,
+                author = :author,
+                genre = :genre,
+                year_published = :year_published,
+                isbn = :isbn,
+                price = :price,
+                stock = :stock
+            WHERE id = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    $price = ($data['price'] === '' ? null : $data['price']);
+
+    return $stmt->execute([
+        ':title'          => $data['title'],
+        ':author'         => $data['author'],
+        ':genre'          => $data['genre'],
+        ':year_published' => $data['year_published'],
+        ':isbn'           => $data['isbn'],
+        ':price'          => $price,
+        ':stock'          => $data['stock'],
+        ':id'             => $id,
+    ]);
+}
+
+
 }
